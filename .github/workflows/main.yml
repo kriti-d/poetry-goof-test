@@ -8,7 +8,7 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
       env:
-        COMMAND: "pip install poetry && poetry config virtualenvs.create false && poetry install"
+        COMMAND: "pip install poetry && poetry config virtualenvs.create false && poetry install && pwd && ls"
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --file=poetry.lock
+        args: --file=poetry.lock --d
