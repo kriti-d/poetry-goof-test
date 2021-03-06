@@ -10,4 +10,6 @@ jobs:
       env:
         COMMAND: "pip install poetry && poetry config virtualenvs.create false && poetry install && pwd && ls"
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: monitor
         
