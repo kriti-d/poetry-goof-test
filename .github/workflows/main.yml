@@ -14,9 +14,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Installing snyk-delta
+      - name: Installing snyk-delta and dependencies
         run: npm i -g snyk-delta
-      - name: Install Dependencies
         env: 
           COMMAND : "pip install poetry && poetry config virtualenvs.create false && poetry install"
       - uses: snyk/actions/setup@master
