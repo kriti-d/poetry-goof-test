@@ -1,0 +1,25 @@
+name: Snyk vulnerability check 
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installing snyk-delta
+        run: npm i -g snyk-delta
+      - name: Installing Poetry Deps
+        run: pip install poetry && poetry config virtualenvs.create false && poetry install
+      - name: Run Snyk to check for vulnerabilities
+        run: snyk test | delta
+      - uses: snyk/actions/setup@master 
+      - name: Snyk Test
+        run: snyk test --json --print-deps | snyk-delta
