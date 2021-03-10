@@ -16,9 +16,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Installing snyk-delta
         run: npm i -g snyk-delta
+      - name: Install Dependencies
+        env: 
+          COMMAND : "pip install poetry && poetry config virtualenvs.create false && poetry install"
       - uses: snyk/actions/setup@master
       - name: Snyk Test
         run: snyk test --json --print-deps | snyk-delta
         env:
-          COMMAND: "pip install poetry && poetry config virtualenvs.create false && poetry install && pwd && ls"
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
