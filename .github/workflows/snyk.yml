@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: pip install poetry && poetry config virtualenvs.create false && poetry install
       - uses: snyk/actions/setup@master
       - name: Snyk Test 
         run: snyk test --sarif-file-output=snyk-sarif.json
