@@ -1,0 +1,20 @@
+
+name: Snyk Security SARIF
+
+on:
+  pull_request:
+
+jobs:
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: snyk/actions/setup@maste
+      - name: Run Snyk to check for Poetry Issues
+        run: snyk test --sarif-file-output=snyk-sarif.json
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
