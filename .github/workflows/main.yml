@@ -1,25 +1,13 @@
-name: Snyk vulnerability check 
-on:
-  pull_request:
-  workflow_dispatch:
+name: Example workflow for Python using Snyk 
+on: pull_request
 jobs:
   security:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
     steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Installing snyk-delta and dependencies
-        run: npm i -g snyk-delta
-        env: 
-          COMMAND : "pip install poetry && poetry config virtualenvs.create false && poetry install"
-      - uses: snyk/actions/setup@master
-      - name: Snyk Test
-        run: snyk test --json --print-deps | snyk-delta
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: monitor
