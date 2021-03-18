@@ -5,7 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: wget
+      uses: wei/wget@v1
+      with:
+        args: -O snyk-jira-sync https://github.com/snyk-tech-services/jira-tickets-for-new-vulns/releases/download/0.4.0/snyk-jira-sync-linux
     - name: Jira Ticket Creation
-      run:  wget https://github.com/snyk-tech-services/jira-tickets-for-new-vulns/releases/download/0.4.0/snyk-jira-sync-linux \
-        snyk-jira-sync-linux -orgID="${SNYK_ORG_ID}" -token="${SNYK_TOKEN}" -jiraProjectID="${JIRA_PROJECT_ID}" -severity=high
+      run:  snyk-jira-sync -orgID="${SNYK_ORG_ID}" -token="${SNYK_TOKEN}" -jiraProjectID="${JIRA_PROJECT_ID}" -severity=high
     
