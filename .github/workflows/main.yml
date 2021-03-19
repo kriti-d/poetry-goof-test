@@ -5,12 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: wget
+    - name: Monitor latest version of app on Snyk
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: monitor
+    - name: wget 
       uses: wei/wget@v1
       with:
         args: -O snyk-jira-sync https://github.com/snyk-tech-services/jira-tickets-for-new-vulns/releases/download/0.7.0/snyk-jira-sync-linux
-    - name: set perms on the binary
+    - name: set perms
       run: sudo chmod -R +x snyk-jira-sync
-    - name: Jira Ticket Creation
+    - name: create jira tickets for high sev issues
       run:  ./snyk-jira-sync -orgID="${{ secrets.SNYK_ORG_ID }}" -token="${{ secrets.SNYK_TOKEN }}" -jiraProjectID="${{ secrets.JIRA_PROJECT_ID }}" --projectID="${{ secrets.SNYK_PROJECT_ID}}" -severity=high
     
