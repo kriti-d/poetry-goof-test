@@ -12,5 +12,5 @@ jobs:
     - name: set perms on the binary
       run: sudo chmod -R +x snyk-jira-sync
     - name: Jira Ticket Creation
-      run:  ./snyk-jira-sync -orgID="${SNYK_ORG_ID}" -token="${SNYK_TOKEN}" -jiraProjectID="${JIRA_PROJECT_ID}" -severity=high
+      run:  ./snyk-jira-sync -orgID="${{ secrets.SNYK_ORG_ID }}" -token="${{ secrets.SNYK_TOKEN }}" -jiraProjectID="${{ secrets.JIRA_PROJECT_ID }}" -severity=high
     
