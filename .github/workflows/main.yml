@@ -10,7 +10,7 @@ jobs:
       with:
         args: -O snyk-jira-sync https://github.com/snyk-tech-services/jira-tickets-for-new-vulns/releases/download/0.7.0/snyk-jira-sync-linux
     - name: set perms on the binary
-      run: chmod -R +x snyk-jira-sync
+      run: ls -alth snyk-jira-sync && sudo chmod -R +x snyk-jira-sync
     - name: Jira Ticket Creation
       run:  snyk-jira-sync -orgID="${SNYK_ORG_ID}" -token="${SNYK_TOKEN}" -jiraProjectID="${JIRA_PROJECT_ID}" -severity=high
     
