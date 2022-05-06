@@ -1,17 +1,14 @@
-
-name: Snyk Security SARIF
-
-on:
-  pull_request:
-
+name: Poetry
+on: pull_request
 jobs:
-  snyk:
+  security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: snyk/actions/setup@master
-      - name: Run Snyk to check for Poetry Issues
-        run: snyk test --high
-        continue-on-error: true
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.8@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --file=pyproject.toml
