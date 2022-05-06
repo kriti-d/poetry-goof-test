@@ -1,4 +1,4 @@
-name: Example workflow for Python using Snyk 
+name: Jira Ticket Creating Workflow 
 on: pull_request
 jobs:
   security:
