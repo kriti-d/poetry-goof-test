@@ -12,9 +12,3 @@ jobs:
         with:
           command: monitor
           args: --file=poetry.lock --package-manager=poetry
-      - name: Fail on High or Critical
-        uses:  snyk/actions/python-3.8@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --file=poetry.lock --package-manager=poetry --severity-threshold=high --fail-on=upgradable
